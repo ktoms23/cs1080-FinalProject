@@ -6,24 +6,14 @@
   <title>Climb On - Main</title>
 
   <style>
-    /* Basic Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-    /* Body & General Styles */
     body {
       font-family: 'Arial', 'Helvetica', sans-serif;
-      background-color: #1A1A1A; /* Dark background */
-      color: #F5F5F5; /* Off-white text */
-      line-height: 1.6;
+      background-color: #F5F5F5; 
+      color: #1E1E1E; 
     }
 
-    /* Full-screen Hero Section */
-    .hero {
-      background: url('https://via.placeholder.com/1500x800') no-repeat center center/cover;
+    .welcome {
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -33,76 +23,73 @@
       color: white;
     }
 
-    .hero h1 {
-      font-size: 4rem;
+    .welcome h1 {
+      font-size: 60px;
       margin-bottom: 20px;
-      letter-spacing: 3px;
+      letter-spacing: 5px;
+      color: #948d8d;
     }
 
-    .hero .subtitle {
-      font-size: 2rem;
+    .welcome .subtitle {
+      font-size: 30px;
       font-weight: 600;
       margin-bottom: 40px;
+      color: #2d2d2d;
     }
 
-    .hero .cta-button {
-      background-color: #9F42A5; /* Purple */
+    .welcome .button {
+      background-color: #c1b6b6; 
       color: white;
-      font-size: 1.2rem;
+      font-size: 20px;
       padding: 15px 40px;
       text-decoration: none;
-      border-radius: 5px;
-      transition: all 0.3s ease;
     }
 
-    .hero .cta-button:hover {
+    .welcome .button:hover {
       background-color: #842e8f;
     }
 
-    /* Navigation Menu */
+   
     nav {
       position: fixed;
-      top: 0;
       width: 100%;
-      background-color: #1A1A1A;
-      padding: 10px 0;
-      z-index: 10;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      background-color: #4c4949;
+      padding: 10px;
+      box-shadow: 0 20px 50px #842e8f;
     }
 
     nav a {
-      color: #F5F5F5;
-      font-size: 1.2rem;
+      color: white;
+      font-size: 20px;
       text-decoration: none;
       margin: 0 30px;
-      padding: 10px 0;
-      transition: color 0.3s ease;
+    
     }
 
     nav a:hover {
-      color: #9F42A5; /* Purple hover */
+      color: #c1b6b6; 
     }
 
-    /* Main Content Section */
+  
     .content {
       padding: 60px 20px;
       text-align: center;
     }
 
     .content h2 {
-      font-size: 2.5rem;
+      font-size: 40px;
       font-weight: 700;
       color: #9F42A5;
       margin-bottom: 40px;
     }
 
     .content p {
-      font-size: 1.2rem;
-      color: #F5F5F5;
+      font-size: 18px;
+      color: #2d2d2d;
       margin-bottom: 40px;
     }
 
-    /* Footer Section */
+  
     footer {
       background-color: #1A1A1A;
       color: #F5F5F5;
@@ -110,13 +97,13 @@
       text-align: center;
     }
 
-    /* Responsive Design */
+    
     @media (max-width: 768px) {
-      .hero h1 {
+      .welcome h1 {
         font-size: 2.5rem;
       }
 
-      .hero .subtitle {
+      .welcome .subtitle {
         font-size: 1.5rem;
       }
 
@@ -137,39 +124,39 @@
 </head>
 <body>
 
-  <!-- Navigation Menu -->
+  
   <nav>
     <a href="progress-tracker.html">Progress Tracker</a>
     <a href="hangboard-workout.html">Hangboard Workout</a>
   </nav>
 
-  <!-- Hero Section -->
-  <div class="hero">
+  
+  <div class="welcome">
     <h1>Welcome to Climb On</h1>
     <div class="subtitle">
       Ready to get stronger, <span id="userName"></span>?
     </div>
-    <a href="#features" class="cta-button">Get Started</a>
+    <a href="#features" class="button">Get Started</a>
   </div>
 
-  <!-- Main Content Section -->
+  
   <div class="content" id="features">
     <h2>Your Journey to Strength</h2>
     <p>Track your progress, improve your skills, and build a powerful climbing routine.</p>
     <p>Find workouts that challenge your strength and endurance.</p>
   </div>
 
-  <!-- Footer Section -->
+  
   <footer>
     <p>&copy; 2025 Climb On. All Rights Reserved.</p>
   </footer>
 
   <script>
-    // Get the name from the URL parameters
+    
     const urlParams = new URLSearchParams(window.location.search);
     const name = urlParams.get('name'); 
 
-    // Display the name in the hero section
+    
     if (name) {
       document.getElementById('userName').textContent = name;
     }

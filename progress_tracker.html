@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Progress Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F4F4F4;
+      color: #1A1A1A;
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav {
+      position: fixed;
+      width: 100%;
+      background-color: #4c4949;
+      padding: 10px;
+      top: 0;
+      box-shadow: 0 20px 50px #842e8f;
+      
+
+    }
+
+    nav a {
+      color: white;
+      font-size: 20px;
+      text-decoration: none;
+      margin: 0 30px;
+    }
+
+    nav a:hover {
+      color: #c1b6b6; 
+    }
+
+    h1 {
+      color: #9F42A5;
+      margin-top: 80px;
+    }
+
+    form {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    select, input, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #9F42A5;
+      padding: 10px;
+    }
+
+    th {
+      background-color: #9F42A5;
+      color: white;
+    }
+
+    td {
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="final_hompage.html">Homepage</a>
+    <a href="hangboard.html">Hangboard Workout</a>
+  </nav>
+
+  <h1>Climbing Progress Tracker</h1>
+
+  <form id="progress-form">
+    <label for="type">Type:</label>
+    <select id="type" required>
+      <option value="sport">Sport Climbing</option>
+      <option value="boulder">Bouldering</option>
+    </select>
+
+    <label for="grade">Grade:</label>
+    <input type="text" id="grade" placeholder="e.g. 5.11a or V5" required />
+
+    <button type="submit">Add Entry</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Grade</th>
+      </tr>
+    </thead>
+    <tbody id="progress-table">
+    </tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById("progress-form");
+    const table = document.getElementById("progress-table");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const type = document.getElementById("type").value;
+      const grade = document.getElementById("grade").value;
+      const date = new Date().toLocaleDateString();
+
+      const row = document.createElement("tr");
+
+      const dateCell = document.createElement("td");
+      dateCell.textContent = date;
+      row.appendChild(dateCell);
+
+      let typeText;
+      if (type === "sport") {
+        typeText = "Sport Climbing";
+      } 
+      else {
+        typeText = "Bouldering";
+      }   
+
+      const typeCell = document.createElement("td");
+      typeCell.textContent = typeText;
+      row.appendChild(typeCell);
+
+      const gradeCell = document.createElement("td");
+      gradeCell.textContent = grade;
+      row.appendChild(gradeCell);
+
+      table.appendChild(row);
+
+
+      
+      document.getElementById("grade").value = '';
+    });
+  </script>
+
+</body>
+</html>

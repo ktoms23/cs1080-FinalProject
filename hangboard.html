@@ -1,1 +1,179 @@
-this allows for a menu where you can choose from different workouts, then it has a timer and will pop up when to do something else. screen  turns red when time to switch workout
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hangboard Workout</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #F4F4F4;
+      color: #1A1A1A;
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav {
+      position: fixed;
+      width: 100%;
+      background-color: #4c4949;
+      padding: 10px;
+      box-shadow: 0 20px 50px #842e8f;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav a {
+      color: white;
+      font-size: 20px;
+      text-decoration: none;
+      margin: 0 30px;
+    
+    }
+
+    nav a:hover {
+      color: #c1b6b6; 
+    }
+
+    .page-content {
+        margin-top: 100px;
+    }
+
+    h1 {
+      color: #9F42A5;
+    }
+
+    button {
+      padding: 10px;
+      background-color:#9F42A5;
+      color:white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 25px;
+    }
+
+    button:hover {
+        background-color: #842e8f;
+
+    }
+
+    select, button {
+      padding: 10px;
+      font-size: 18px;
+      margin: 10px;
+    }
+
+    #workout-area {
+      margin-top: 40px;
+      padding: 40px;
+      border-radius: 20px;
+    }
+
+    #timer {
+      font-size: 80px;
+      margin-top: 20px;
+    }
+
+    #status {
+      font-size: 30px;
+      margin-top: 10px;
+    }
+
+    .work-phase {
+      background-color: rgb(20, 198, 20); 
+      color: white;
+    }
+
+    .rest-phase {
+      background-color: #d51c1c; 
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+    <nav>
+        <a href="final_hompage.html">Homepage</a>
+    </nav>
+    <div class="page-content">
+        <h1>Hangboard Workout</h1>
+
+        <label for="workoutSelect">Choose a workout:</label>
+        <select id="workoutSelect">
+            <option value="beginner">Beginner - 7s on / 3s off</option>
+            <option value="intermediate">Intermediate - 10s on / 5s off</option>
+            <option value="advanced">Advanced - 15s on / 10s off</option>
+        </select>
+
+        <button onclick="startWorkout()">Start Workout</button>
+
+        <div id="workout-area">
+            <div id="status">Choose a workout to begin</div>
+            <div id="timer">00:00</div>
+        </div>
+    </div>
+
+    <script>
+        let workTime = 7;
+        let restTime = 3;
+        let isWorking = true;
+        let interval;
+        let timeLeft = 0;
+
+        const workoutOptions = {
+        beginner: { work: 7, rest: 3 },
+        intermediate: { work: 10, rest: 5 },
+        advanced: { work: 15, rest: 10 }
+        };
+
+        const timerDisplay = document.getElementById("timer");
+        const statusDisplay = document.getElementById("status");
+        const workoutArea = document.getElementById("workout-area");
+
+        function startWorkout() {
+        const selectedWorkout = document.getElementById("workoutSelect").value;
+        const {work, rest} = workoutOptions[selectedWorkout];
+
+        workTime = work;
+        restTime = rest;
+        isWorking = true;
+        timeLeft = workTime;
+
+        updateDisplay();
+        clearInterval(interval);
+        interval = setInterval(tick, 1000);
+
+        }
+
+        function tick() {
+        timeLeft--;
+
+        if (timeLeft <= 0) {
+            isWorking = !isWorking;
+
+            if (isWorking) {
+            timeLeft = workTime;
+            } else {
+            timeLeft = restTime;
+            }
+        }
+
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+      timerDisplay.textContent = `00:${timeLeft.toString().padStart(2, "0")}`;
+      if (isWorking) {
+        workoutArea.classList.add("work-phase");
+        workoutArea.classList.remove("rest-phase");
+        statusDisplay.textContent = "WORK!";
+      } else {
+        workoutArea.classList.add("rest-phase");
+        workoutArea.classList.remove("work-phase");
+        statusDisplay.textContent = "REST!";
+      }
+    }
+  </script>
+</body>
+</html>

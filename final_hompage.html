@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Climb On - Main</title>
+  <title>Climb On Homepage</title>
 
   <style>
 
@@ -37,15 +37,16 @@
       color: #2d2d2d;
     }
 
-    .welcome .button {
+    .button {
       background-color: #c1b6b6; 
       color: white;
       font-size: 20px;
       padding: 15px 40px;
       text-decoration: none;
+      justify-content: center;
     }
 
-    .welcome .button:hover {
+    .button:hover {
       background-color: #842e8f;
     }
 
@@ -97,28 +98,81 @@
       text-align: center;
     }
 
+    .user-experience h2 {
+      color: #1E1E1E;
+      margin-bottom: 50px;
+    }
+
+    .experience-item {
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      background-color: #F5F5F5;
+    }
+
+    .experience-item p {
+      margin: 10px 0;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #ddd;
+      margin-top: 10px;
+    }
+
+    form {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      
+    }
+
+    form input, form textarea {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    form button {
+      padding: 10px;
+      background-color:#9F42A5;
+      color:white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 25px;
+      
+    }
+    
+    form button:hover {
+      background-color: #842e8f;
+    }
     
     @media (max-width: 768px) {
       .welcome h1 {
-        font-size: 2.5rem;
+        font-size: 30px;
       }
 
       .welcome .subtitle {
-        font-size: 1.5rem;
+        font-size: 20px;
       }
 
       .content h2 {
-        font-size: 2rem;
+        font-size: 20px;
       }
 
       .content p {
-        font-size: 1rem;
+        font-size: 12px;
       }
 
       nav a {
-        font-size: 1rem;
+        font-size: 15px;
         margin: 0 20px;
       }
+      
+    
     }
   </style>
 </head>
@@ -136,14 +190,31 @@
     <div class="subtitle">
       Ready to get stronger, <span id="userName"></span>?
     </div>
-    <a href="#features" class="button">Get Started</a>
+    <a href="#about" class="button">Get Started</a>
   </div>
 
   
-  <div class="content" id="features">
-    <h2>Your Journey to Strength</h2>
-    <p>Track your progress, improve your skills, and build a powerful climbing routine.</p>
-    <p>Find workouts that challenge your strength and endurance.</p>
+  <div class="content" id="about">
+    <h2>A Journey to Becoming Your Strongest Climber</h2>
+    <p>Track your progress, see your improvement, and get interactive hangboarding workouts.</p>
+    <p>Climb On is a free website that was created to help climbers start their training journey. 
+      Under the progress tracker page you can input your workouts,
+      track your improvements over time, and stay motivated as you build strength. </p>
+  </div>
+
+  <div class="user-experience" id="share">
+    <h2>What Users Are Saying:</h2>
+    <div class="button-container">
+      <a href="#share" class="button">Share Your Experience!</a>
+    </div>
+    <div id="experience-list"></div>
+
+    
+    <form id="experience-form">
+      <input type="text" id="user-name" placeholder="Your name" required>
+      <textarea id="user-experience" placeholder="Share your experience with Climb On" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
   </div>
 
   
@@ -153,13 +224,84 @@
 
   <script>
     
+    //Function to get user-experience from localStorage
+    function getExperiences(){
+      const experiences = JSON.parse(localStorage.getItem('experiences'));
+      if (experiences) {
+        return experiences;
+      }
+      else {
+        return [];
+      }
+    }
+
+    //Save experiences
+    function saveExperiences(experiences){
+      localStorage.setItem('experiences', JSON.stringify(experiences));
+
+    }
+
+    //Display experiences
+    function displayExperiences(){
+      const experiences = getExperiences();
+      const experienceList = document.getElementById("experience-list");
+      experienceList.innerHTML = '';
+
+      for (let i = 0; i < experiences.length; i++){
+        const entry = experiences[i];
+
+        const div = document.createElement("div");
+        div.className = "experience-item";
+        div.innerHTML = ` <p><strong>${entry.name}</strong> says: </p>
+          <p>"${entry.experience}"</p>
+          <hr> `;
+        
+        experienceList.appendChild(div);
+
+      
+      }
+    }
+
+    displayExperiences();
+
+    document.getElementById("experience-form").addEventListener("submit", function(event) {
+      event.preventDefault(); //prevent form reloading
+
+      const name = document.getElementById("user-name").value;
+      const experience = document.getElementById("user-experience").value;
+
+      //if both filled add to localStorage and re-display
+      if (name && experience) {
+        const experiences = getExperiences();
+        experiences.push({name: name, experience: experience});
+        saveExperiences(experiences);
+
+        //reset the form
+        document.getElementById("user-name").value = '';
+        document.getElementById("user-experience").value = '';
+
+        displayExperiences(); //redisplay
+      }
+      else{
+        alert("Please fill in both fields before submitting.")
+      }
+    });
+
     const urlParams = new URLSearchParams(window.location.search);
     const name = urlParams.get('name'); 
+
 
     
     if (name) {
       document.getElementById('userName').textContent = name;
     }
+    if (name){
+      const nameInput = document.getElementById('user-name');
+      if (nameInput){
+        nameInput.value = name;
+      }
+    }
+
   </script>
 
 </body>

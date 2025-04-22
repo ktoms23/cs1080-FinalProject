@@ -227,7 +227,6 @@
 
   <script>
     
-    //Function to get user-experience from localStorage
     function getExperiences(){
       const experiences = JSON.parse(localStorage.getItem('experiences'));
       if (experiences) {
@@ -238,13 +237,11 @@
       }
     }
 
-    //Save experiences
     function saveExperiences(experiences){
       localStorage.setItem('experiences', JSON.stringify(experiences));
 
     }
 
-    //Display experiences
     function displayExperiences(){
       const experiences = getExperiences();
       const experienceList = document.getElementById("experience-list");
@@ -268,22 +265,20 @@
     displayExperiences();
 
     document.getElementById("experience-form").addEventListener("submit", function(event) {
-      event.preventDefault(); //prevent form reloading
+      event.preventDefault(); 
 
       const name = document.getElementById("user-name").value;
       const experience = document.getElementById("user-experience").value;
 
-      //if both filled add to localStorage and re-display
       if (name && experience) {
         const experiences = getExperiences();
         experiences.push({name: name, experience: experience});
         saveExperiences(experiences);
 
-        //reset the form
         document.getElementById("user-name").value = '';
         document.getElementById("user-experience").value = '';
 
-        displayExperiences(); //redisplay
+        displayExperiences(); 
       }
       else{
         alert("Please fill in both fields before submitting.")

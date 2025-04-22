@@ -107,43 +107,84 @@
   </table>
 
   <script>
+    function getProgress(){
+      const progress = JSON.parse(localStorage.getItem('progress'));
+      if (progress){
+        return progress;
+      }
+      else {
+        return [];
+      }
+    }
+
+    function saveProgress(progress){
+      localStorage.setItem('progress', JSON.stringify(progress));
+    }
+
+    function displayProgress(){
+      const progress = getProgress();
+      const progressTable = document.getElementById("progress-table");
+      progressTable.innerHTML = '';
+
+      for (let i = 0; i < progress.length; i++){
+        let entry = progress[i];
+        const row = document.createElement("tr");
+
+        const dateCell = document.createElement("td");
+        dateCell.textContent = entry.date;
+        row.appendChild(dateCell);
+
+        const typeCell = document.createElement("td");
+        typeCell.textContent = entry.type;
+        row.appendChild(typeCell);
+
+        const gradeCell = document.createElement("td");
+        gradeCell.textContent = entry.grade;
+        row.appendChild(gradeCell);
+
+        progressTable.appendChild(row);
+
+
+      }
+    }
+    displayProgress();
+
+
     const form = document.getElementById("progress-form");
-    const table = document.getElementById("progress-table");
+    //const table = document.getElementById("progress-table");
 
     form.addEventListener("submit", function(event) {
-      event.preventDefault();
+        event.preventDefault();
 
-      const type = document.getElementById("type").value;
-      const grade = document.getElementById("grade").value;
-      const date = new Date().toLocaleDateString();
+        const type = document.getElementById("type").value;
+        const grade = document.getElementById("grade").value;
+        const date = new Date().toLocaleDateString();
 
-      const row = document.createElement("tr");
+        //const row = document.createElement("tr");
+        //const dateCell = document.createElement("td");
+        //dateCell.textContent = date;
+        //row.appendChild(dateCell);
 
-      const dateCell = document.createElement("td");
-      dateCell.textContent = date;
-      row.appendChild(dateCell);
+        let typeText;
+        if (type === "sport") {
+          typeText = "Sport Climbing";
+        } 
+        else {
+          typeText = "Bouldering";
+        }   
 
-      let typeText;
-      if (type === "sport") {
-        typeText = "Sport Climbing";
-      } 
-      else {
-        typeText = "Bouldering";
-      }   
+        const progress = getProgress();
+        progress.push({
+          date: date, type: typeText, grade: grade
+        });
+        saveProgress(progress);
 
-      const typeCell = document.createElement("td");
-      typeCell.textContent = typeText;
-      row.appendChild(typeCell);
+        displayProgress();
 
-      const gradeCell = document.createElement("td");
-      gradeCell.textContent = grade;
-      row.appendChild(gradeCell);
+        
 
-      table.appendChild(row);
-
-
-      
-      document.getElementById("grade").value = '';
+        
+        document.getElementById("grade").value = '';
     });
   </script>
 
